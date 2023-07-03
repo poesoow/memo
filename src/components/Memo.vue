@@ -10,7 +10,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { reactive } from 'vue';
+
 export default {
   name: "MemoComp",
   setup() {
@@ -24,6 +26,10 @@ export default {
     const add = () => {
       data.push("추가된 메모 내용")
     }
+
+    axios.get('/api/memos').then((res)=>{
+      console.log(res)
+    })
 
     return { data, add };
   },
