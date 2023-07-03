@@ -4,7 +4,7 @@
       <button class="btn btn-primary" @click="add()">+ 추가</button>
     </div>
     <ul>
-      <li v-for="el in data" :key="el">{{ el }}</li>
+      <li v-for="el in state.data" :key="el">{{ el }}</li>
     </ul>
   </div>
 </template>
@@ -16,22 +16,19 @@ import { reactive } from 'vue';
 export default {
   name: "MemoComp",
   setup() {
-    const data = reactive([
-      "메모1 내용",
-      "메모2 내용",
-      "메모3 내용",
-      "메모4 내용",
-      "메모5 내용",
-    ]);
+    const state = reactive({
+      data: [],
+    })
+
     const add = () => {
-      data.push("추가된 메모 내용")
+      state.data.push("추가된 메모 내용")
     }
 
     axios.get('/api/memos').then((res)=>{
-      console.log(res)
+      state.data = res.data
     })
 
-    return { data, add };
+    return { state, add };
   },
 };
 </script>
